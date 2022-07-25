@@ -1,0 +1,15 @@
+*.pyc
+*.pyo
+*.db
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl
+__pycache__
+.DS_Store
+.coverage
+.venv
+activate
+.ipynb_checkpoints
+sandpit
