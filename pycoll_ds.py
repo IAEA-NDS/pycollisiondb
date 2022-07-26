@@ -91,7 +91,8 @@ class PyCollDataSet:
         ax.set_yscale('log')
 
         if use_latex:
-            reaction = PVReaction(self.metadata["reaction"])
+            strict = not ('COM' in self.metadata['process_types'])
+            reaction = PVReaction(self.metadata["reaction"], strict=strict)
             s_reaction = f'${reaction.latex}$'
         else:
             s_reaction = self.metadata["reaction"]

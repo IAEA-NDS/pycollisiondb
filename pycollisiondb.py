@@ -21,6 +21,7 @@ logger.addHandler(ch)
 API_URL = 'https://db-amdis.org/collisiondb/api/'
 #API_URL = 'http://127.0.0.1:8282/api/'
 LOCAL_ARCHIVE_DIR = Path('/Users/christian/projects/pycollisiondb/sandpit/db/')
+LOCAL_ARCHIVE_DIR = Path('/Users/christian/www/colldb_results/')
 
 class PyCollisionDBConnectionError(Exception):
     pass
@@ -54,6 +55,8 @@ class PyCollision:
 
         self.use_latex = False
 
+        self.datasets = {}
+
 
     def make_query(self, query_data):
         logger.debug('getting CSRF token ...')
@@ -75,6 +78,9 @@ class PyCollision:
     def validate_query_keywords(self, keywords):
         keywords_set = set(keywords)
 
+        if not keywords_set.issubset(self.VALID_QUERY_KEYWORDS):
+            raise PyCollisionDBKeywordError(f'Invalid query keyword in {keywords}')
+
         if 'pk' in keywords and 'pks' in keywords:
             raise PyCollisionDBKeywordError(f'pk and pks not allowed {keywords}')
 
@@ -82,8 +88,15 @@ class PyCollision:
             raise PyCollisionDBKeywordError(
                 f'reaction_text and reaction_texts not allowed {keywords}')
 
-        if not keywords_set.issubset(self.VALID_QUERY_KEYWORDS):
-            raise PyCollisionDBKeywordError(f'Invalid query keyword in {keywords}')
+        if 'reactants' in keywords and ('reactant1' in keywords or 'reactant2' in keywords
+                                        or 'reaction_text' in keywords):
+            raise PyCollisionDBKeywordError(
+                f'Cannot specify reactant1, reactant2 or reaction_text if reactants is given')
+
+        if 'products' in keywords and ('product1' in keywords or 'product2' in keywords
+                                       or 'reaction_text' in keywords):
+            raise PyCollisionDBKeywordError(
+                f'Cannot specify product1, product2 or reaction_text if products is given')
 
 
     def query(self, **kwargs):
@@ -99,8 +112,27 @@ class PyCollision:
             del kwargs['reaction_text']
             kwargs['reaction_texts'] = [reaction_text]
 
+        if reactants := kwargs.get('reactants'):
+            if len(reactants) > 2:
+                raise PyCollisionDBKeywordError(
+                f'A maximum of two species can be specified in reactants')
+            del kwargs['reactants']
+            kwargs['reactant1'] = reactants[0]
+            try:
+                kwargs['reactant2'] = reactants[1]
+            except IndexError:
+                kwargs['reactant2'] = ''
         
-        
+        if products := kwargs.get('products'):
+            if len(products) > 2:
+                raise PyCollisionDBKeywordError(
+                f'A maximum of two species can be specified in products')
+            del kwargs['products']
+            kwargs['product1'] = products[0]
+            try:
+                kwargs['product2'] = products[1]
+            except IndexError:
+                kwargs['product2'] = ''
         return self.make_query(kwargs)
         
 
@@ -201,7 +233,12 @@ class PyCollision:
             print(reaction_text)
             print('='*72)
             for pk in pks:
-                print(f'   {pk}')
+                print(f'   qid: D{pk}')
+                if self.datasets:
+                    metadata = self.datasets[pk].metadata
+                    print('   process_types:', list(metadata['process_types'].keys()))
+                    print('   data_type:', metadata['data_type'])
+                    print('   refs:', metadata['refs'])
             print()
 
     def read_all_datasets(self):
@@ -246,3 +283,21 @@ class PyCollision:
                 raise PyCollisionDBPlotError('Column metadata not all the same in requested plot.')
 
         return data_type, columns
+
+
+    @classmethod
+    def get_datasets(cls, archive_uuid=None, query=None):
+        if archive_uuid is None:
+            assert query is not None
+            pycoll = cls()
+            pycoll.query(**query)
+            pycoll.download_datasets_archive_from_url()
+            pycoll.unzip_dataset_archive()
+        else:
+            pycoll = cls(archive_uuid)
+
+        pycoll.get_manifest()
+        pycoll.get_dataset_pks_by_reaction()
+        pycoll.read_all_datasets()
+
+        return pycoll
