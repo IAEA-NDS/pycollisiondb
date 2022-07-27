@@ -7,3 +7,4 @@ class PyCollisionDBTest(unittest.TestCase):
         pycoll.query(pks=1)
         self.assertRaises(PyCollisionDBKeywordError, pycoll.query, notakey=1)
         self.assertRaises(PyCollisionDBKeywordError, pycoll.query, pk=1, pks=[3,4])
+

@@ -38,7 +38,7 @@ class PyCollision:
     VALID_QUERY_KEYWORDS = (
         'pk', 'pks', 'reaction_text', 'reaction_texts', 'reactant1', 'reactant2',
         'product1', 'product2', 'process_types', 'method', 'data_type',
-        'reactants', 'products',
+        'reactants', 'products', 'doi',
     )
 
     def __init__(self, archive_uuid=None):
@@ -240,6 +240,25 @@ class PyCollision:
                     print('   data_type:', metadata['data_type'])
                     print('   refs:', metadata['refs'])
             print()
+
+    def get_distinct_rps(self):
+        self.reactant_rps, self.product_rps = set(), set()
+        self.reactant_species, self.product_species = defaultdict(set), defaultdict(set)
+        for ds in self.datasets.values():
+            reactants = ds.reaction.reactants
+            reactant_rps = set(r[1] for r in reactants)
+            self.reactant_rps |= reactant_rps
+            for reactant_rp in reactant_rps:
+                formula = reactant_rp.formula
+                self.reactant_species[formula].add(tuple(reactant_rp.states))
+
+            products = ds.reaction.products
+            product_rps = set(p[1] for p in products)
+            self.product_rps |= product_rps
+            for product_rp in product_rps:
+                formula = product_rp.formula
+                self.product_species[formula].add(tuple(product_rp.states))
+        
 
     def read_all_datasets(self):
         logger.info('Reading in all dataset data...')

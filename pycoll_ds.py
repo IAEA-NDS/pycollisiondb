@@ -27,6 +27,9 @@ class PyCollDataSet:
             self._read_xy(fi)  
         logger.debug(f'{self.n} data points read in.')
 
+        strict = not ('COM' in self.metadata['process_types'])
+        self.reaction = PVReaction(self.metadata["reaction"], strict=strict)
+
 
     def _read_xy(self, fi):
         unc_perc = self.metadata['json_data'].get('unc_perc')
@@ -91,9 +94,7 @@ class PyCollDataSet:
         ax.set_yscale('log')
 
         if use_latex:
-            strict = not ('COM' in self.metadata['process_types'])
-            reaction = PVReaction(self.metadata["reaction"], strict=strict)
-            s_reaction = f'${reaction.latex}$'
+            s_reaction = f'${self.reaction.latex}$'
         else:
-            s_reaction = self.metadata["reaction"]
+            s_reaction = str(self.reaction)
         line.set_label(self.metadata["qid"] + ': ' + s_reaction)
