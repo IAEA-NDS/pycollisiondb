@@ -1,0 +1,12 @@
+LICENSE
+README.rst
+setup.cfg
+setup.py
+src/pycollisiondb/__init__.py
+src/pycollisiondb/pycoll_ds.py
+src/pycollisiondb/pycollisiondb.py
+src/pycollisiondb.egg-info/PKG-INFO
+src/pycollisiondb.egg-info/SOURCES.txt
+src/pycollisiondb.egg-info/dependency_links.txt
+src/pycollisiondb.egg-info/requires.txt
+src/pycollisiondb.egg-info/top_level.txt

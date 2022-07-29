@@ -1,0 +1,7 @@
+pyparsing>=2.3
+
+[dev]
+black
+pytest-cov
+tox
+ipython
