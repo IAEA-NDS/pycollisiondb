@@ -8,7 +8,7 @@ long_description = (root / "README.rst").read_text(encoding="utf-8")
 
 setup(
     name="pycollisiondb",
-    version="0.1",
+    version="0.1.3",
     description="A package for interacting with CollisionDB",
     long_description=long_description,
     long_description_content_type="text/x-rst",
@@ -33,9 +33,13 @@ setup(
     packages=find_packages(where="src"),
     python_requires=">=3.8",
     install_requires=[
-        "pyparsing>=2.3",
+        "pyvalem>=2.5.10",
+        "requests>=2.27.1",
+        "numpy>=1.23.1",
+        "matplotlib>=3.5.2",
+        "pyqn>=1.3.1"
     ],
-    extras_require={"dev": ["black", "pytest-cov", "tox", "ipython"]},
+    extras_require={"dev": ["black", "pytest-cov", "tox", "ipython", "jupyter"]},
     project_urls={
         "Bug Reports": "https://github.com/xnx/pycollisiondb/issues",
     },

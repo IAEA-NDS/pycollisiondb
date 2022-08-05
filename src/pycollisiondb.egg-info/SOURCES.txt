@@ -1,5 +1,6 @@
 LICENSE
 README.rst
+pyproject.toml
 setup.cfg
 setup.py
 src/pycollisiondb/__init__.py
