@@ -53,6 +53,12 @@ class PyCollDataSet:
                     self.unc_lo[i] = self.unc_hi[i] = self.y[i] * unc_perc / 100
 
     def plot_dataset(self, ax, use_latex=False, **kwargs):
+
+        try:
+            label_fields = kwargs.pop('label')
+        except KeyError:
+            label_fields = ('qid', 'reaction')
+
         def get_error_bounds():
             ymin = (self.y - self.unc_lo)[::-1]
             if all(ymin <= 0):
@@ -94,4 +100,15 @@ class PyCollDataSet:
             s_reaction = f"${self.reaction.latex}$"
         else:
             s_reaction = str(self.reaction)
-        line.set_label(self.metadata["qid"] + ": " + s_reaction)
+
+
+        #line.set_label(self.metadata["qid"] + ": " + s_reaction)
+        label = ', '.join([self._get_label(k) for k in label_fields])
+        line.set_label(label)
+
+    def _get_label(self, metadata_key):
+        if metadata_key in ('qid', 'reaction'):
+            return self.metadata[metadata_key]
+
+        if metadata_key in ('process_types', 'refs'):
+            return ','.join(self.metadata[metadata_key].keys())

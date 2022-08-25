@@ -46,13 +46,14 @@ class PyCollision:
 
 
     def __init__(self, archive_uuid=None,
-                 API_URL="https://db-amdis.org/collisiondb/api/",
+                 DB_URL="https://db-amdis.org/collisiondb/",
                  DATA_DIR=None,
                 ):
 
 
         self.archive_uuid = archive_uuid
-        self.API_URL = API_URL
+        self.API_URL = os.path.join(DB_URL, 'api/')
+        self.REFS_API_URL = os.path.join(DB_URL, 'refs/api/')
 
         self.DATA_DIR = DATA_DIR
         if self.DATA_DIR is None:
@@ -342,3 +343,19 @@ class PyCollision:
         pycoll.read_all_datasets()
 
         return pycoll
+
+    def resolve_refs(self):
+        qids = set(qid for ds in self.datasets.values() for qid in ds.metadata['refs'].keys())
+
+        if not qids:
+            self.refs = {}
+        
+        data = {"qid": list(qids)}
+        r = requests.get(self.REFS_API_URL, params=data)
+        if r.status_code != 200:
+            raise PyCollisionDBConnectionError(
+                f"Could not retrieve data: HTTP"
+                f" {r.status_code} ({r.reason}) returned from {self.REFS_API_URL}"
+            )
+        refs_list = json.loads(r.text)
+        self.refs = {qid: ref_dict for ref in refs_list for qid, ref_dict in ref.items()}
