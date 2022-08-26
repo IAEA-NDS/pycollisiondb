@@ -12,8 +12,15 @@ MAX_DATAPOINTS_FOR_MARKERS = 20
 class PyCollDataSet:
     def __init__(self, filepath=None):
         self.filepath = filepath
+        self.metadata = None
         if filepath is not None:
             self.read_dataset()
+
+    def __repr__(self):
+        if not self.metadata:
+            return "<Uninitialized PyCollDataSet>"
+        qid, reaction = self.metadata["qid"], self.metadata["reaction"]
+        return f"{qid}: {reaction}"
 
     def read_dataset(self, filepath=None):
         if filepath is not None:
@@ -55,9 +62,9 @@ class PyCollDataSet:
     def plot_dataset(self, ax, use_latex=False, **kwargs):
 
         try:
-            label_fields = kwargs.pop('label')
+            label_fields = kwargs.pop("label")
         except KeyError:
-            label_fields = ('qid', 'reaction')
+            label_fields = ("qid", "reaction")
 
         def get_error_bounds():
             ymin = (self.y - self.unc_lo)[::-1]
@@ -101,14 +108,13 @@ class PyCollDataSet:
         else:
             s_reaction = str(self.reaction)
 
-
-        #line.set_label(self.metadata["qid"] + ": " + s_reaction)
-        label = ', '.join([self._get_label(k) for k in label_fields])
+        # line.set_label(self.metadata["qid"] + ": " + s_reaction)
+        label = ", ".join([self._get_label(k) for k in label_fields])
         line.set_label(label)
 
     def _get_label(self, metadata_key):
-        if metadata_key in ('qid', 'reaction'):
+        if metadata_key in ("qid", "reaction"):
             return self.metadata[metadata_key]
 
-        if metadata_key in ('process_types', 'refs'):
-            return ','.join(self.metadata[metadata_key].keys())
+        if metadata_key in ("process_types", "refs"):
+            return ",".join(self.metadata[metadata_key].keys())

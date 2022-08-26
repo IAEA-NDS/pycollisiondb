@@ -16,17 +16,17 @@ formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(messag
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-logger2 = logging.getLogger('pycollisiondb')
+logger2 = logging.getLogger("pycollisiondb")
 logger2.setLevel(logging.DEBUG)
 logger2.addHandler(ch)
+
 
 class PyCollisionDBTest(unittest.TestCase):
     def test_query_keyword_validation(self):
         logger.debug("RUNNING A TEST!")
         pycoll = PyCollision()
-        pycoll = PyCollision.get_datasets(query={'pks': [89433]})
-        print(pycoll.datasets[89433].metadata['reaction'])
-
+        pycoll = PyCollision.get_datasets(query={"pks": [89433]})
+        print(pycoll.datasets[89433].metadata["reaction"])
 
         self.assertRaises(PyCollisionDBKeywordError, pycoll.query, notakey=1)
         self.assertRaises(PyCollisionDBKeywordError, pycoll.query, pk=1, pks=[3, 4])

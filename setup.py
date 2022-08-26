@@ -37,7 +37,7 @@ setup(
         "requests>=2.27.1",
         "numpy>=1.23.1",
         "matplotlib>=3.5.2",
-        "pyqn>=1.3.1"
+        "pyqn>=1.3.1",
     ],
     extras_require={"dev": ["black", "pytest-cov", "tox", "ipython", "jupyter"]},
     project_urls={
