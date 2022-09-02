@@ -3,6 +3,7 @@ import logging
 
 from pyvalem.reaction import Reaction as PVReaction
 import numpy as np
+from pyqn.units import Units
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +60,7 @@ class PyCollDataSet:
                 else:
                     self.unc_lo[i] = self.unc_hi[i] = self.y[i] * unc_perc / 100
 
-    def plot_dataset(self, ax, use_latex=False, **kwargs):
+    def plot_dataset(self, ax, use_latex=False, label_axes=False, **kwargs):
 
         try:
             label_fields = kwargs.pop("label")
@@ -108,9 +109,26 @@ class PyCollDataSet:
         else:
             s_reaction = str(self.reaction)
 
-        # line.set_label(self.metadata["qid"] + ": " + s_reaction)
         label = ", ".join([self._get_label(k) for k in label_fields])
         line.set_label(label)
+
+        if label_axes:
+            self.label_axes(ax, use_latex)
+
+
+    def label_axes(self, ax, use_latex=False):
+        columns = self.metadata['json_data']['columns']
+        if use_latex:
+            x_units = Units(columns[0]["units"])
+            y_units = Units(columns[1]["units"])
+            ax.set_xlabel(columns[0]["name"] + "/" + f"${x_units.latex}$")
+            ax.set_ylabel(columns[1]["name"] + "/" + f"${y_units.latex}$")
+        else:
+            x_units = columns[0]["units"]
+            y_units = columns[1]["units"]
+            ax.set_xlabel(columns[0]["name"] + "/" + x_units)
+            ax.set_ylabel(columns[1]["name"] + "/" + y_units)
+
 
     def _get_label(self, metadata_key):
         if metadata_key in ("qid", "reaction"):
@@ -118,3 +136,26 @@ class PyCollDataSet:
 
         if metadata_key in ("process_types", "refs"):
             return ",".join(self.metadata[metadata_key].keys())
+
+    def convert_units(self, column_name, to_units):
+        def _get_data_arrays(column_name):
+            columns = self.metadata['json_data']['columns']
+            if columns[0]['name'] == column_name:
+                return columns[0], self.x, None, None
+            elif columns[1]['name'] == column_name:
+                return columns[1], self.y, self.unc_lo, self.unc_hi
+            else:
+                raise ValueError(f"No such column: {column_name}")
+
+        column, arr, unc_lo, unc_hi = _get_data_arrays(column_name)
+        from_units = column.get('units')
+        from_units = Units(from_units)
+        to_units = Units(to_units)
+        fac = from_units.conversion(to_units)
+        arr *= fac
+        if unc_lo is not None:
+            unc_lo *= fac
+        if unc_hi is not None:
+            unc_hi *= fac
+        column['units'] = str(to_units)
+

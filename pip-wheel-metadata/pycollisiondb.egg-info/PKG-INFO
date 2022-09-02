@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: pycollisiondb
+Version: 0.1.3
+Summary: A package for interacting with CollisionDB
+Home-page: https://github.com/xnx/pycollisiondb
+Author: Christian Hill
+Author-email: ch.hill@iaea.org
+Project-URL: Bug Reports, https://github.com/xnx/pycollisiondb/issues
+Keywords: chemistry,formula,species,state,reaction
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Chemistry
+Classifier: Topic :: Scientific/Engineering :: Physics
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+Provides-Extra: dev
+License-File: LICENSE
+
+*****************************
+Introduction to PyCollisionDB
+*****************************
+
+
+
+PyCollisionDB is a Python package for interacting with CollisionDB, a database
+of plasma collisional cross sections and rate coefficients.

@@ -306,16 +306,8 @@ class PyCollision:
         for pk in pks:
             self.datasets[pk].plot_dataset(ax, use_latex=self.use_latex, **kwargs)
 
-        if self.use_latex:
-            x_units = Units(columns[0]["units"])
-            y_units = Units(columns[1]["units"])
-            ax.set_xlabel(columns[0]["name"] + "/" + f"${x_units.latex}$")
-            ax.set_ylabel(columns[1]["name"] + "/" + f"${y_units.latex}$")
-        else:
-            x_units = columns[0]["units"]
-            y_units = columns[1]["units"]
-            ax.set_xlabel(columns[0]["name"] + "/" + x_units)
-            ax.set_ylabel(columns[1]["name"] + "/" + y_units)
+        first_dataset = next(iter(self.datasets.values()))
+        first_dataset.label_axes(ax, self.use_latex)
 
     def _get_plot_metadata(self, pks):
         data_type = self.datasets[pks[0]].metadata["data_type"]

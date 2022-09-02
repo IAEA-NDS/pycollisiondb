@@ -1,0 +1,13 @@
+LICENSE
+README.rst
+pyproject.toml
+setup.cfg
+setup.py
+/Users/christian/projects/pycollisiondb/pip-wheel-metadata/pycollisiondb.egg-info/PKG-INFO
+/Users/christian/projects/pycollisiondb/pip-wheel-metadata/pycollisiondb.egg-info/SOURCES.txt
+/Users/christian/projects/pycollisiondb/pip-wheel-metadata/pycollisiondb.egg-info/dependency_links.txt
+/Users/christian/projects/pycollisiondb/pip-wheel-metadata/pycollisiondb.egg-info/requires.txt
+/Users/christian/projects/pycollisiondb/pip-wheel-metadata/pycollisiondb.egg-info/top_level.txt
+src/pycollisiondb/__init__.py
+src/pycollisiondb/pycoll_ds.py
+src/pycollisiondb/pycollisiondb.py
