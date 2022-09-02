@@ -365,3 +365,16 @@ class PyCollision:
         self.refs = {
             qid: ref_dict for ref in refs_list for qid, ref_dict in ref.items()
         }
+
+    def convert_units(self, column_units):
+        """Convert the units in all datasets.
+
+        column_units should be a dictionary of column_name: to_units items,
+        where column_name identifies the dataset column to convert (e.g. 'E',
+        'sigma', and to_units is a Units object or string representing the
+        units to convert to. Dimensions have to match.
+
+        """
+        for dataset in self.datasets.values():
+            for column_name, to_units in column_units.items():
+                dataset.convert_units(column_name, to_units)
