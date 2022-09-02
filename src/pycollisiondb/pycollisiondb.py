@@ -319,11 +319,16 @@ class PyCollision:
 
     def _get_plot_metadata(self, pks):
         data_type = self.datasets[pks[0]].metadata["data_type"]
+        frame = self.datasets[pks[0]].metadata.get("frame", "target")
         columns = self.datasets[pks[0]].metadata["json_data"]["columns"]
         for pk in pks[1:]:
             if self.datasets[pk].metadata["data_type"] != data_type:
                 raise PyCollisionDBPlotError(
                     "Data types not all the same in requested plot."
+                )
+            if self.datasets[pk].metadata.get("frame", "target") != frame:
+                raise PyCollisionDBPlotError(
+                    "Energy frames not all the same in requested plot."
                 )
             if self.datasets[pk].metadata["json_data"]["columns"] != columns:
                 raise PyCollisionDBPlotError(

@@ -1,0 +1,16 @@
+{
+    "timestamp": "2022-08-26 09:13:24.227221+00:00",
+    "uuid": "9e6a467b-d531-4241-85f9-a86fdcdb9d68",
+    "GET_string": "reactant1=H%2B&reactant2=H&product1=&product2=&author=&method=&data_type=&process_types=66",
+    "ndatasets": 8,
+    "datasets": {
+        "D102737": "H+ + H 1s \u2192 H+ + H+ + e-",
+        "D102738": "H+ + H 2s \u2192 H+ + H+ + e-",
+        "D102739": "H+ + H 2p \u2192 H+ + H+ + e-",
+        "D102740": "H+ + H 3s \u2192 H+ + H+ + e-",
+        "D102741": "H+ + H 3p \u2192 H+ + H+ + e-",
+        "D102742": "H+ + H 3d \u2192 H+ + H+ + e-",
+        "D103103": "H 1s + H+ \u2192 H+ + H+ + e-",
+        "D103104": "H 1s + H+ \u2192 H+ + H+ + e-"
+    }
+}

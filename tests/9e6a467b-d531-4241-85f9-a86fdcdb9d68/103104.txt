@@ -1,0 +1,14 @@
+{"qid": "D103104", "reaction": "H 1s + H+ \u2192 H+ + H+ + e-", "process_types": {"HIN": "Ionization"}, "data_type": "cross section", "refs": {"B34": {"doi": "10.1088/0022-3700/20/11/016"}}, "json_comment": {"comment": "The classic crossed-beam experiments of Shah and Gilbody at Queens's University Belfast from 1987, lower energy range"}, "json_data": {"method": "experiment", "columns": [{"name": "E", "units": "eV.u-1"}, {"name": "sigma", "units": "cm2"}], "frame": "target"}}
+------------------------------------------------------------------------
+9.400e+03 1.62e-17:1.6e-18
+1.140e+04 2.45e-17:2.4e-18
+1.340e+04 3.31e-17:2.4e-18
+1.540e+04 4.38e-17:1.4e-18
+1.840e+04 5.69e-17:3.4e-18
+2.240e+04 7.79e-17:3.2e-18
+2.640e+04 1.053e-16:2.5e-18
+3.240e+04 1.227e-16:2.7e-18
+3.840e+04 1.44e-16:2.5e-18
+4.840e+04 1.4e-16:4.8e-18
+6.000e+04 1.383e-16:2.4e-18
+7.500e+04 1.291e-16:4.1e-18

@@ -1,0 +1,12 @@
+{"qid": "D102737", "reaction": "H+ + H 1s \u2192 H+ + H+ + e-", "process_types": {"HIN": "Ionization"}, "data_type": "cross section", "refs": {"B32": {"doi": "10.1016/j.adt.2019.05.002"}}, "json_comment": {"comment": "Ionization cross sections in H+ + H collisions using a semiclassical close-coupling approach. Cross sections represent the average values of the results obtained with two basis sets and the uncertainties provide the estimate of convergence of the cross sections"}, "json_data": {"method": "CC", "columns": [{"name": "E", "units": "eV.u-1"}, {"name": "sigma", "units": "cm2"}]}}
+------------------------------------------------------------------------
+1.000e+03 5.471e-19:1.1e-16
+4.000e+03 1.96e-18:3.3e-18
+9.000e+03 1.235e-17:1.9e-17
+1.600e+04 4.05e-17:1.2e-17
+2.500e+04 9.192e-17:7.4e-18
+3.600e+04 1.405e-16:5e-18
+4.900e+04 1.628e-16:3.4e-18
+6.400e+04 1.605e-16:2.3e-18
+8.100e+04 1.45e-16:5.4e-19
+1.000e+05 1.248e-16:1.5e-18
