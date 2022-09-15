@@ -9,9 +9,13 @@ logger = logging.getLogger(__name__)
 
 MAX_DATAPOINTS_FOR_MARKERS = 20
 
+class PyCollDataSetValidationError(Exception):
+    pass
 
 class PyCollDataSet:
     def __init__(self, filepath=None):
+        self.dataset_ready = False
+        self.is_valid = None
         self.filepath = filepath
         self.metadata = None
         if filepath is not None:
@@ -32,6 +36,7 @@ class PyCollDataSet:
             self.metadata = json.loads(fi.readline())
             assert fi.readline()[:4] == "----"
             self._read_xy(fi)
+        self.dataset_ready = True
         logger.debug(f"{self.n} data points read in.")
 
         strict = not ("COM" in self.metadata["process_types"])
@@ -159,3 +164,32 @@ class PyCollDataSet:
             unc_hi *= fac
         column['units'] = str(to_units)
 
+    def validate(self, raise_exception=False):
+
+        self.validation_messages = []
+        def raise_or_report(msg):
+            if raise_exception:
+                raise PyCollDataSetValidationError(msg)
+            self.validation_messages.append(msg)
+
+        if not self.dataset_ready:
+            raise_or_report("Dataset not ready for validation: no data!")
+        
+        def x_is_monotonic():
+            return np.all(np.diff(self.x) > 0)
+
+        def y_is_nonnegative():
+            return np.all(self.y >= 0)
+
+        if not x_is_monotonic():
+            raise_or_report("x-data not monotonic!")
+
+        if not y_is_nonnegative():
+            raise_or_report("y-data not non-negative!")
+
+        if self.validation_messages:
+            self.is_valid = False
+            return False
+
+        self.is_valid = True
+        return True

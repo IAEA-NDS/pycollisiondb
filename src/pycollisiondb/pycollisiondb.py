@@ -378,3 +378,9 @@ class PyCollision:
         for dataset in self.datasets.values():
             for column_name, to_units in column_units.items():
                 dataset.convert_units(column_name, to_units)
+
+    def validate(self, raise_exception=False):
+        self.all_valid = True
+        for ds in self.datasets.values():
+            self.all_valid &= ds.validate(raise_exception)
+        return self.all_valid
