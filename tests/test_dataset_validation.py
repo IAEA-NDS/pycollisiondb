@@ -6,11 +6,12 @@ import unittest
 from pycollisiondb.pycollisiondb import PyCollision
 from pycollisiondb.pycoll_ds import PyCollDataSet, PyCollDataSetValidationError
 
+
 class PyCollisionValidationTest(unittest.TestCase):
     def test_query_keyword_validation(self):
         pycoll = PyCollision.get_datasets(
-                archive_uuid='9e6a467b-d531-4241-85f9-a86fdcdb9d68',
-                DATA_DIR='tests')
+            archive_uuid="9e6a467b-d531-4241-85f9-a86fdcdb9d68", DATA_DIR="tests"
+        )
         self.assertEqual(len(pycoll.datasets), 8)
 
         # pks: 102737 – 102742, 103103, 103104
@@ -30,8 +31,9 @@ class PyCollisionValidationTest(unittest.TestCase):
             pycoll.datasets[102738].validate(raise_exception=True)
             self.assertEqual(str(exc.exception), "x-data not monotonic!")
         self.assertFalse(pycoll.datasets[102738].validate())
-        self.assertEqual(pycoll.datasets[102738].validation_messages,
-                         ['x-data not monotonic!'])
+        self.assertEqual(
+            pycoll.datasets[102738].validation_messages, ["x-data not monotonic!"]
+        )
         self.assertFalse(pycoll.datasets[102738].is_valid)
 
         pycoll.datasets[102738].x[4] = pycoll.datasets[102738].x[2]
@@ -44,8 +46,9 @@ class PyCollisionValidationTest(unittest.TestCase):
             pycoll.datasets[102739].validate(raise_exception=True)
             self.assertEqual(str(exc.exception), "y-data not non-negative!")
         self.assertFalse(pycoll.datasets[102739].validate())
-        self.assertEqual(pycoll.datasets[102739].validation_messages,
-                         ['y-data not non-negative!'])
+        self.assertEqual(
+            pycoll.datasets[102739].validation_messages, ["y-data not non-negative!"]
+        )
         self.assertFalse(pycoll.datasets[102739].is_valid)
 
         self.assertFalse(pycoll.validate())

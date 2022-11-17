@@ -9,8 +9,10 @@ logger = logging.getLogger(__name__)
 
 MAX_DATAPOINTS_FOR_MARKERS = 20
 
+
 class PyCollDataSetValidationError(Exception):
     pass
+
 
 class PyCollDataSet:
     def __init__(self, filepath=None):
@@ -64,6 +66,17 @@ class PyCollDataSet:
                     self.unc_lo[i] = self.unc_hi[i] = self.y[i]
                 else:
                     self.unc_lo[i] = self.unc_hi[i] = self.y[i] * unc_perc / 100
+
+    def print_values(self):
+        columns = self.metadata["json_data"]["columns"]
+        header = (
+            f"{columns[0]['name']} / {columns[0]['units']} "
+            f"{columns[1]['name']} / {columns[1]['units']}"
+        )
+        data_table = [header]
+        for x, y in zip(self.x, self.y):
+            data_table.append(f"{x} {y}")
+        return "\n".join(data_table)
 
     def plot_dataset(self, ax, use_latex=False, label_axes=False, **kwargs):
 
@@ -120,9 +133,8 @@ class PyCollDataSet:
         if label_axes:
             self.label_axes(ax, use_latex)
 
-
     def label_axes(self, ax, use_latex=False):
-        columns = self.metadata['json_data']['columns']
+        columns = self.metadata["json_data"]["columns"]
         if use_latex:
             x_units = Units(columns[0]["units"])
             y_units = Units(columns[1]["units"])
@@ -134,7 +146,6 @@ class PyCollDataSet:
             ax.set_xlabel(columns[0]["name"] + "/" + x_units)
             ax.set_ylabel(columns[1]["name"] + "/" + y_units)
 
-
     def _get_label(self, metadata_key):
         if metadata_key in ("qid", "reaction"):
             return self.metadata[metadata_key]
@@ -144,16 +155,16 @@ class PyCollDataSet:
 
     def convert_units(self, column_name, to_units):
         def _get_data_arrays(column_name):
-            columns = self.metadata['json_data']['columns']
-            if columns[0]['name'] == column_name:
+            columns = self.metadata["json_data"]["columns"]
+            if columns[0]["name"] == column_name:
                 return columns[0], self.x, None, None
-            elif columns[1]['name'] == column_name:
+            elif columns[1]["name"] == column_name:
                 return columns[1], self.y, self.unc_lo, self.unc_hi
             else:
                 raise ValueError(f"No such column: {column_name}")
 
         column, arr, unc_lo, unc_hi = _get_data_arrays(column_name)
-        from_units = column.get('units')
+        from_units = column.get("units")
         from_units = Units(from_units)
         to_units = Units(to_units)
         fac = from_units.conversion(to_units)
@@ -162,11 +173,12 @@ class PyCollDataSet:
             unc_lo *= fac
         if unc_hi is not None:
             unc_hi *= fac
-        column['units'] = str(to_units)
+        column["units"] = str(to_units)
 
     def validate(self, raise_exception=False):
 
         self.validation_messages = []
+
         def raise_or_report(msg):
             if raise_exception:
                 raise PyCollDataSetValidationError(msg)
@@ -174,7 +186,7 @@ class PyCollDataSet:
 
         if not self.dataset_ready:
             raise_or_report("Dataset not ready for validation: no data!")
-        
+
         def x_is_monotonic():
             return np.all(np.diff(self.x) > 0)
 
