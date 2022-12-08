@@ -52,3 +52,15 @@ class PyCollisionDBTest(unittest.TestCase):
         ds.convert_units("E", "keV.u-1")
         self.assertAlmostEqual(ds.x[0], 9.4)
         self.assertEqual(xcol["units"], "keV.u-1")
+
+class PyCollisionDBReactionTextTest(unittest.TestCase):
+    def test_reaction_text_ordering(self):
+        logger.debug("RUNNING A TEST!")
+        pycoll = PyCollision()
+        pycoll = PyCollision.get_datasets(
+            query={"reaction_text": "H+ + H 1s -> H+ + H+ + e-"},
+            DB_URL='http://127.0.0.1:8282')
+        self.assertEqual(len(pycoll.datasets), 4)
+        self.assertEqual(sorted(list(pycoll.datasets.keys())),
+                         [102737, 103103, 103104, 107356])
+
