@@ -43,10 +43,10 @@ or from the source by running (one of the two) from the project source directory
     # or
     python3 -m pip install .
 
-PYCollision
+PyCollision
 ===========
 
-The ``PYCollision`` object represents the main instance of the ``PyCollisionDB`` package for interacting with collisional databases, and datasets may be compared, output in various formats, and manipulated using the methods object as described below:
+The ``PyCollision`` object represents the main instance of the ``PyCollisionDB`` package for interacting with collisional databases, and datasets may be compared, output in various formats, and manipulated using the methods object as described below:
 
 .. code-block:: pycon
 
@@ -55,7 +55,7 @@ The ``PYCollision`` object represents the main instance of the ``PyCollisionDB``
 Dataset(s) Search 
 ------------------
 
-Collisional datasets can be retrieved using ``PYCollision`` class method ``get_datasets`` for a given query. The value of each query can be passed as a Python dictionary with valid metadata keys, and values can be specified either as a string or a list of comma-separated strings.
+Collisional datasets can be retrieved using ``PyCollision`` class method ``get_datasets`` for a given query. The value of each query can be passed as a Python dictionary with valid metadata keys, and values can be specified either as a string or a list of comma-separated strings.
 
 .. code-block:: pycon
 
@@ -257,7 +257,7 @@ More details
 
 Convert Units
 ---------------
-The ``PYCollision`` method ``convert_units`` can be used to change the units of datasets.
+The ``PyCollision`` method ``convert_units`` can be used to change the units of datasets.
 
 .. code-block:: pycon
 
@@ -279,7 +279,7 @@ The ``PYCollision`` method ``convert_units`` can be used to change the units of 
   
 Visualization tools
 ------------------------------
-The ``PYCollision`` method ``plot_all_datasets`` can be used to create plots using the ``pyplot`` submodule of the ``Matplotlib`` library as the visualization utility.
+The ``PyCollision`` method ``plot_all_datasets`` can be used to create plots using the ``pyplot`` submodule of the ``Matplotlib`` library as the visualization utility.
 
 .. code-block:: pycon  
 
