@@ -292,10 +292,10 @@ The ``PYCollision`` method ``plot_all_datasets`` can be used to create plots usi
     >>> pycoll.plot_all_datasets(ax, label=('reaction', 'qid', 'refs', 'process_types'))
     >>> plt.legend()
     
-.. image:: example.jpeg
-   :height: 100px
-   :width: 200 px
-   :scale: 50 %
+.. image:: pycollisiondb-plot-example.png
+   :height: 480px
+   :width: 640 px
+   :scale: 100 %
    :alt: figure
    :align: right                
    
