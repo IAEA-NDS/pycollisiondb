@@ -312,7 +312,7 @@ class PyCollision:
 
     def datasets_compatible(self, pks=None, raise_exception=True):
         if pks is None:
-            pks = self.datasets.keys()
+            pks = list(self.datasets.keys())
         data_type = self.datasets[pks[0]].metadata["data_type"]
         frame = self.datasets[pks[0]].metadata.get("frame", "target")
         columns = self.datasets[pks[0]].metadata["json_data"]["columns"]
@@ -343,7 +343,8 @@ class PyCollision:
 
     def _get_plot_metadata(self, pks):
         # Check datasets are compatible for plotting, raising an Exception if not.
-        compatible, (data_type, frame, columns) = datasets_compatible(pks, raise_exception=True)
+        compatible, (data_type, frame, columns) = self.datasets_compatible(
+                            pks, raise_exception=True)
 
         return data_type, columns
 
