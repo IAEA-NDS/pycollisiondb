@@ -11,3 +11,7 @@ src/pycollisiondb.egg-info/SOURCES.txt
 src/pycollisiondb.egg-info/dependency_links.txt
 src/pycollisiondb.egg-info/requires.txt
 src/pycollisiondb.egg-info/top_level.txt
+tests/test_dataset_methods.py
+tests/test_dataset_validation.py
+tests/test_read_archive.py
+tests/test_search_keywords.py

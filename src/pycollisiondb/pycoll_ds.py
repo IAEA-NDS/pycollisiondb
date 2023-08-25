@@ -45,7 +45,7 @@ class PyCollDataSet:
         self.reaction = PVReaction(self.metadata["reaction"], strict=strict)
 
     def _read_xy(self, fi):
-        unc_perc = self.metadata["json_data"].get("unc_perc")
+        unc_perc = self.metadata.get("unc_perc")
         lines = fi.readlines()
 
         self.n = len(lines)
@@ -68,7 +68,7 @@ class PyCollDataSet:
                     self.unc_lo[i] = self.unc_hi[i] = self.y[i] * unc_perc / 100
 
     def print_values(self):
-        columns = self.metadata["json_data"]["columns"]
+        columns = self.metadata["columns"]
         header = (
             f"{columns[0]['name']} / {columns[0]['units']} "
             f"{columns[1]['name']} / {columns[1]['units']}"
@@ -134,7 +134,7 @@ class PyCollDataSet:
             self.label_axes(ax, use_latex)
 
     def label_axes(self, ax, use_latex=False):
-        columns = self.metadata["json_data"]["columns"]
+        columns = self.metadata["columns"]
         if use_latex:
             x_units = Units(columns[0]["units"])
             y_units = Units(columns[1]["units"])
@@ -155,7 +155,7 @@ class PyCollDataSet:
 
     def convert_units(self, column_name, to_units):
         def _get_data_arrays(column_name):
-            columns = self.metadata["json_data"]["columns"]
+            columns = self.metadata["columns"]
             if columns[0]["name"] == column_name:
                 return columns[0], self.x, None, None
             elif columns[1]["name"] == column_name:

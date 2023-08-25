@@ -75,10 +75,16 @@ class PyCollision:
 
         self.datasets = {}
 
+    def __repr__(self):
+        addr = hex(id(self))
+        if not self.datasets:
+            return f"<PyCollision object at {addr} (no data)>"
+        return f"<PyCollision object at {addr} ({len(self.datasets)} datasets)>"
+
     def __str__(self):
         if not self.datasets:
             return "<PyCollision object (no data)>"
-        return f"<PyCollision object ({len(self.datasets)} datasets)>"
+        return f"<PyCollision object {len(self.datasets)} datasets)>"
 
     def make_query(self, query_data):
         logger.debug("getting CSRF token ...")
@@ -248,9 +254,10 @@ class PyCollision:
         logger.debug(f"Retrieving dataset pks for each reaction from the manifest...")
         self.pks = defaultdict(list)
         self.all_pks = []
-        for qid, reaction_text in self.manifest["datasets"].items():
+        for qid, reaction_details in self.manifest["datasets"].items():
             pk = int(qid[1:])
             self.all_pks.append(pk)
+            reaction_text = reaction_details['reaction']
             self.pks[reaction_text].append(pk)
         return self.pks
 
@@ -315,7 +322,7 @@ class PyCollision:
             pks = list(self.datasets.keys())
         data_type = self.datasets[pks[0]].metadata["data_type"]
         frame = self.datasets[pks[0]].metadata.get("frame", "target")
-        columns = self.datasets[pks[0]].metadata["json_data"]["columns"]
+        columns = self.datasets[pks[0]].metadata["columns"]
         for pk in pks[1:]:
             if self.datasets[pk].metadata["data_type"] != data_type:
                 if raise_exception:
@@ -331,7 +338,7 @@ class PyCollision:
                     )
                 else:
                     False, None
-            if self.datasets[pk].metadata["json_data"]["columns"] != columns:
+            if self.datasets[pk].metadata["columns"] != columns:
                 if raise_exception:
                     raise PyCollisionDBPlotError(
                         "Column metadata not all the same in requested plot."
