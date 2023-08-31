@@ -28,9 +28,7 @@ class PyCollisionDBPlotError(Exception):
 class PyCollision:
 
     VALID_QUERY_KEYWORDS = (
-        "pk",
-        "pks",
-        "reaction_text",
+        "pks", "ids",
         "reaction_texts",
         "reactant1",
         "reactant2",
@@ -42,6 +40,8 @@ class PyCollision:
         "reactants",
         "products",
         "doi",
+        "evaluated",
+        "valid_on",
     )
 
     def __init__(
@@ -95,6 +95,14 @@ class PyCollision:
         data = {"query": json.dumps(query_data)}
         r = requests.post(self.API_URL, data=data, headers=header, cookies=cookies)
         if r.status_code != 200:
+            if r.status_code == 400:
+                query_error = json.loads(r.content).get('query_error', 'but I don\'t know what')
+                msg = f"Bad Query: {query_error}"
+                raise PyCollisionDBConnectionError(msg)
+            if r.status_code == 404:
+                #msg = f"No data matches the query"
+                #raise PyCollisionDBConnectionError(msg)
+                return ''
             raise PyCollisionDBConnectionError(
                 f"Could not retrieve data: HTTP"
                 f" {r.status_code} ({r.reason}) returned from {self.API_URL}"
@@ -110,13 +118,8 @@ class PyCollision:
         if not keywords_set.issubset(self.VALID_QUERY_KEYWORDS):
             raise PyCollisionDBKeywordError(f"Invalid query keyword in {keywords}")
 
-        if "pk" in keywords and "pks" in keywords:
-            raise PyCollisionDBKeywordError(f"pk and pks not allowed {keywords}")
-
-        if "reaction_text" in keywords and "reaction_texts" in keywords:
-            raise PyCollisionDBKeywordError(
-                f"reaction_text and reaction_texts not allowed {keywords}"
-            )
+        if "ids" in keywords and "pks" in keywords:
+            raise PyCollisionDBKeywordError(f"both ids and pks not allowed {keywords}")
 
         if "reactants" in keywords and (
             "reactant1" in keywords
@@ -138,16 +141,6 @@ class PyCollision:
 
     def query(self, **kwargs):
         self.validate_query_keywords(kwargs.keys())
-
-        pk = kwargs.get("pk")
-        if pk:
-            del kwargs["pk"]
-            kwargs["pks"] = [pk]
-
-        reaction_text = kwargs.get("reaction_text")
-        if reaction_text:
-            del kwargs["reaction_text"]
-            kwargs["reaction_texts"] = [reaction_text]
 
         if reactants := kwargs.get("reactants"):
             if len(reactants) > 2:
@@ -174,60 +167,19 @@ class PyCollision:
                 kwargs["product2"] = ""
         return self.make_query(kwargs)
 
-    def query_database_by_pk(self, pks):
-        """
-
-        Query the database for a list of CDataSet ids and return the URL
-        at which the archive of filtered datasets can be obtained. This URL
-        is stored as self.archive_url.
-
-        """
-
-        if type(pks) is int:
-            pks = [pks]
-
-        logger.debug(f"querying for pks = {pks} ...")
-        query_data = {"pk": pks}
-
-        return self.make_query(query_data)
-
-    def query_database_by_reaction_text(self, reaction_texts):
-        """
-
-        Query the database for a list of CDataSet ids and return the URL
-        at which the archive of filtered datasets can be obtained. This URL
-        is stored as self.archive_url.
-
-        """
-
-        if type(reaction_texts) is str:
-            reaction_texts = [reaction_texts]
-
-        logger.debug(f"querying for reaction_texts = {reaction_texts} ...")
-        data = {"reaction_text": reaction_texts}
-
-        return self.make_query(data)
-
-    def query_database_by_reactants(self, reactants):
-        """
-
-        Query the database for a list of reactants.
-
-        """
-
-        if type(reactants) is str:
-            reactants = [reactants]
-
-        logger.debug(f"querying for reactants = {reactants} ...")
-        data = {"reactants": reactants}
-
-        return self.make_query(data)
 
     def download_datasets_archive_from_url(self):
         logger.debug(f"Downloading compressed dataset archive from {self.archive_url}")
-        r = requests.get(self.archive_url)
+
         self.archive_name = os.path.basename(self.archive_url)
         self.archive_path = self.DATA_DIR / self.archive_name
+
+        # TODO take this out in production
+        if self.archive_url[:7] == "file://":
+            return self.archive_path
+        else:
+            r = requests.get(self.archive_url)
+
         logger.debug(f"Writing compressed dataset archive to {self.archive_path}")
         with open(self.archive_path, "wb") as fo:
             fo.write(r.content)
@@ -360,7 +312,14 @@ class PyCollision:
         if archive_uuid is None:
             assert query is not None
             pycoll = cls(**kwargs)
-            pycoll.query(**query)
+            try:
+                pycoll.query(**query)
+            except PyCollisionDBConnectionError as e:
+                print(e)
+                return None
+            if not pycoll.archive_url:
+                # No data if there is no archive_url.
+                return pycoll
             pycoll.download_datasets_archive_from_url()
             pycoll.unzip_dataset_archive()
         else:
