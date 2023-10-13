@@ -1,16 +1,56 @@
 {
-    "timestamp": "2022-08-26 09:13:24.227221+00:00",
-    "uuid": "9e6a467b-d531-4241-85f9-a86fdcdb9d68",
-    "GET_string": "reactant1=H%2B&reactant2=H&product1=&product2=&author=&method=&data_type=&process_types=66",
+    "timestamp": "Fri Oct 13 12:02:01 2023",
+    "uuid": "7b406a84-b5e7-4725-9dcf-a762cadcb5d2",
+    "GET_string": "",
     "ndatasets": 8,
     "datasets": {
-        "D102737": "H+ + H 1s \u2192 H+ + H+ + e-",
-        "D102738": "H+ + H 2s \u2192 H+ + H+ + e-",
-        "D102739": "H+ + H 2p \u2192 H+ + H+ + e-",
-        "D102740": "H+ + H 3s \u2192 H+ + H+ + e-",
-        "D102741": "H+ + H 3p \u2192 H+ + H+ + e-",
-        "D102742": "H+ + H 3d \u2192 H+ + H+ + e-",
-        "D103103": "H 1s + H+ \u2192 H+ + H+ + e-",
-        "D103104": "H 1s + H+ \u2192 H+ + H+ + e-"
+        "D102737": {
+            "reaction": "H+ + H 1s \u2192 H+ + H+ + e-",
+            "refs": [
+                "B32"
+            ]
+        },
+        "D102738": {
+            "reaction": "H+ + H 2s \u2192 H+ + H+ + e-",
+            "refs": [
+                "B32"
+            ]
+        },
+        "D102739": {
+            "reaction": "H+ + H 2p \u2192 H+ + H+ + e-",
+            "refs": [
+                "B32"
+            ]
+        },
+        "D102740": {
+            "reaction": "H+ + H 3s \u2192 H+ + H+ + e-",
+            "refs": [
+                "B32"
+            ]
+        },
+        "D102741": {
+            "reaction": "H+ + H 3p \u2192 H+ + H+ + e-",
+            "refs": [
+                "B32"
+            ]
+        },
+        "D102742": {
+            "reaction": "H+ + H 3d \u2192 H+ + H+ + e-",
+            "refs": [
+                "B32"
+            ]
+        },
+        "D103103": {
+            "reaction": "H 1s + H+ \u2192 H+ + H+ + e-",
+            "refs": [
+                "B33"
+            ]
+        },
+        "D103104": {
+            "reaction": "H 1s + H+ \u2192 H+ + H+ + e-",
+            "refs": [
+                "B34"
+            ]
+        }
     }
 }

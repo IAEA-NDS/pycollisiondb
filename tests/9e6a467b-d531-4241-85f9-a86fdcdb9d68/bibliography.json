@@ -1,0 +1,47 @@
+{
+    "B32": {
+        "id": 32,
+        "authors": "H. Agueny, J. Petter Hansen, A. Dubois, A. Makhoute, A. Taoutioui, N. Sisourat",
+        "title": "Electron capture, ionization and excitation cross sections for keV collisions between fully stripped ions and atomic hydrogen in ground and excited states",
+        "journal": "Atomic Data and Nuclear Data Tables",
+        "volume": "129-130",
+        "page_start": "101281",
+        "page_end": "",
+        "article_number": "101281",
+        "year": 2019,
+        "note": "",
+        "doi": "10.1016/j.adt.2019.05.002",
+        "bibcode": "2019ADNDT.12901281A",
+        "url": "https://dx.doi.org/10.1016/j.adt.2019.05.002"
+    },
+    "B33": {
+        "id": 33,
+        "authors": "M. B Shah, H. B Gilbody",
+        "title": "Experimental study of the ionisation of atomic hydrogen by fast H<sup>+</sup>and He<sup>2+</sup>ions",
+        "journal": "Journal of Physics B: Atomic and Molecular Physics",
+        "volume": "14",
+        "page_start": "2361",
+        "page_end": "2377",
+        "article_number": "",
+        "year": 1981,
+        "note": "",
+        "doi": "10.1088/0022-3700/14/14/009",
+        "bibcode": "1981JPhB...14.2361S",
+        "url": "https://dx.doi.org/10.1088/0022-3700/14/14/009"
+    },
+    "B34": {
+        "id": 34,
+        "authors": "M. B Shah, D. S Elliott, H. B Gilbody",
+        "title": "Ionisation of atomic hydrogen by 9-75 keV protons",
+        "journal": "Journal of Physics B: Atomic and Molecular Physics",
+        "volume": "20",
+        "page_start": "2481",
+        "page_end": "2485",
+        "article_number": "",
+        "year": 1987,
+        "note": "",
+        "doi": "10.1088/0022-3700/20/11/016",
+        "bibcode": "1987JPhB...20.2481S",
+        "url": "https://dx.doi.org/10.1088/0022-3700/20/11/016"
+    }
+}

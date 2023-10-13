@@ -26,9 +26,9 @@ class PyCollisionDBPlotError(Exception):
 
 
 class PyCollision:
-
     VALID_QUERY_KEYWORDS = (
-        "pks", "ids",
+        "pks",
+        "ids",
         "reaction_texts",
         "reactant1",
         "reactant2",
@@ -50,7 +50,6 @@ class PyCollision:
         DB_URL="https://db-amdis.org/collisiondb/",
         DATA_DIR=None,
     ):
-
         self.archive_uuid = archive_uuid
         self.API_URL = os.path.join(DB_URL, "api/")
         self.REFS_API_URL = os.path.join(DB_URL, "refs/api/")
@@ -96,13 +95,15 @@ class PyCollision:
         r = requests.post(self.API_URL, data=data, headers=header, cookies=cookies)
         if r.status_code != 200:
             if r.status_code == 400:
-                query_error = json.loads(r.content).get('query_error', 'but I don\'t know what')
+                query_error = json.loads(r.content).get(
+                    "query_error", "but I don't know what"
+                )
                 msg = f"Bad Query: {query_error}"
                 raise PyCollisionDBConnectionError(msg)
             if r.status_code == 404:
-                #msg = f"No data matches the query"
-                #raise PyCollisionDBConnectionError(msg)
-                return ''
+                # msg = f"No data matches the query"
+                # raise PyCollisionDBConnectionError(msg)
+                return ""
             raise PyCollisionDBConnectionError(
                 f"Could not retrieve data: HTTP"
                 f" {r.status_code} ({r.reason}) returned from {self.API_URL}"
@@ -167,7 +168,6 @@ class PyCollision:
                 kwargs["product2"] = ""
         return self.make_query(kwargs)
 
-
     def download_datasets_archive_from_url(self):
         logger.debug(f"Downloading compressed dataset archive from {self.archive_url}")
 
@@ -209,7 +209,7 @@ class PyCollision:
         for qid, reaction_details in self.manifest["datasets"].items():
             pk = int(qid[1:])
             self.all_pks.append(pk)
-            reaction_text = reaction_details['reaction']
+            reaction_text = reaction_details["reaction"]
             self.pks[reaction_text].append(pk)
         return self.pks
 
@@ -268,7 +268,6 @@ class PyCollision:
         first_dataset = next(iter(self.datasets.values()))
         first_dataset.label_axes(ax, self.use_latex)
 
-
     def datasets_compatible(self, pks=None, raise_exception=True):
         if pks is None:
             pks = list(self.datasets.keys())
@@ -299,11 +298,11 @@ class PyCollision:
                     False, None
         return True, (data_type, frame, columns)
 
-
     def _get_plot_metadata(self, pks):
         # Check datasets are compatible for plotting, raising an Exception if not.
         compatible, (data_type, frame, columns) = self.datasets_compatible(
-                            pks, raise_exception=True)
+            pks, raise_exception=True
+        )
 
         return data_type, columns
 

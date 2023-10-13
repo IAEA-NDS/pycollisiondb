@@ -79,7 +79,6 @@ class PyCollDataSet:
         return "\n".join(data_table)
 
     def plot_dataset(self, ax, use_latex=False, label_axes=False, **kwargs):
-
         try:
             label_fields = kwargs.pop("label")
         except KeyError:
@@ -176,7 +175,6 @@ class PyCollDataSet:
         column["units"] = str(to_units)
 
     def validate(self, raise_exception=False):
-
         self.validation_messages = []
 
         def raise_or_report(msg):

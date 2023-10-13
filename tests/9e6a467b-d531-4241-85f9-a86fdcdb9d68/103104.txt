@@ -1,4 +1,4 @@
-{"qid": "D103104", "reaction": "H 1s + H+ \u2192 H+ + H+ + e-", "process_types": {"HIN": "Ionization"}, "data_type": "cross section", "refs": {"B34": {"doi": "10.1088/0022-3700/20/11/016"}}, "json_comment": {"comment": "The classic crossed-beam experiments of Shah and Gilbody at Queens's University Belfast from 1987, lower energy range"}, "json_data": {"method": "experiment", "columns": [{"name": "E", "units": "eV.u-1"}, {"name": "sigma", "units": "cm2"}], "frame": "target"}}
+{"qid": "D103104", "reaction": "H 1s + H+ \u2192 H+ + H+ + e-", "process_types": {"HIN": "Ionization"}, "data_type": "cross section", "refs": {"B34": {"doi": "10.1088/0022-3700/20/11/016"}}, "comment": "The classic crossed-beam experiments of Shah and Gilbody at Queens's University Belfast from 1987, lower energy range", "method": "experiment", "columns": [{"name": "E", "units": "eV.u-1"}, {"name": "sigma", "units": "cm2"}], "frame": "target", "metadata_version": "M1.0", "time_added": "2022-06-30 13:31:33.633082+00:00"}
 ------------------------------------------------------------------------
 9.400e+03 1.62e-17:1.6e-18
 1.140e+04 2.45e-17:2.4e-18

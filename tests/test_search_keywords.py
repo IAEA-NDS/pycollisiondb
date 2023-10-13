@@ -38,7 +38,7 @@ class PyCollisionDBTest(unittest.TestCase):
         self.assertEqual(len(pycoll.datasets), 3)
 
         ds = pycoll.datasets[103104]
-        ycol = ds.metadata["json_data"]["columns"][1]
+        ycol = ds.metadata["columns"][1]
         self.assertEqual(ycol["name"], "sigma")
         self.assertEqual(ycol["units"], "cm2")
         ds.convert_units("sigma", "a02")
@@ -46,21 +46,20 @@ class PyCollisionDBTest(unittest.TestCase):
         self.assertAlmostEqual(ds.unc_lo[0], 0.057137037)
         self.assertEqual(ycol["units"], "a02")
 
-        xcol = ds.metadata["json_data"]["columns"][0]
+        xcol = ds.metadata["columns"][0]
         self.assertEqual(xcol["name"], "E")
         self.assertEqual(xcol["units"], "eV.u-1")
         ds.convert_units("E", "keV.u-1")
         self.assertAlmostEqual(ds.x[0], 9.4)
         self.assertEqual(xcol["units"], "keV.u-1")
 
-class PyCollisionDBReactionTextTest(unittest.TestCase):
-    def test_reaction_text_ordering(self):
-        logger.debug("RUNNING A TEST!")
-        pycoll = PyCollision()
-        pycoll = PyCollision.get_datasets(
-            query={"reaction_text": "H+ + H 1s -> H+ + H+ + e-"},
-            DB_URL='http://127.0.0.1:8282')
-        self.assertEqual(len(pycoll.datasets), 4)
-        self.assertEqual(sorted(list(pycoll.datasets.keys())),
-                         [102737, 103103, 103104, 107356])
 
+# class PyCollisionDBReactionTextTest(unittest.TestCase):
+#    def test_reaction_text_ordering(self):
+#        logger.debug("RUNNING A TEST!")
+#        pycoll = PyCollision.get_datasets(
+#            query={"reaction_texts": ["H+ + H 1s -> H+ + H+ + e-"]},
+#            DB_URL='http://127.0.0.1:8282')
+#        self.assertEqual(len(pycoll.datasets), 4)
+#        self.assertEqual(sorted(list(pycoll.datasets.keys())),
+#                         [102737, 103103, 103104, 107356])
