@@ -8,7 +8,7 @@ long_description = (root / "README.rst").read_text(encoding="utf-8")
 
 setup(
     name="pycollisiondb",
-    version="0.1.4",
+    version="0.1.5",
     description="A package for interacting with CollisionDB",
     long_description=long_description,
     long_description_content_type="text/x-rst",
