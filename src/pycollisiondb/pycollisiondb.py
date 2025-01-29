@@ -42,6 +42,7 @@ class PyCollision:
         "doi",
         "evaluated",
         "valid_on",
+        "count_only",
     )
 
     def __init__(
@@ -109,9 +110,12 @@ class PyCollision:
                 f" {r.status_code} ({r.reason}) returned from {self.API_URL}"
             )
         json_response = json.loads(r.text)
-        self.archive_url = json_response["archive_url"]
-        logger.debug(f"Success! archive_url is {self.archive_url}")
-        return self.archive_url
+        try:
+            self.archive_url = json_response["archive_url"]
+            logger.debug(f"Success! archive_url is {self.archive_url}")
+            return self.archive_url
+        except KeyError:
+            return json_response
 
     def validate_query_keywords(self, keywords):
         keywords_set = set(keywords)
