@@ -7,9 +7,8 @@
 .. |Code style| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
 .. _PYPI: https://pypi.org/project/pycollisiondb/
-.. _COLLISIONDB: https://db-amdis.org/collisiondb/
-.. _ALADDIN2: https://db-amdis.org/aladdin2/
-.. _Documentation: https://db-amdis.org/collisiondb/submitting-data/
+.. _COLLISIONDB: https://amdis.iaea.org/db/collisiondb/
+.. _Documentation: https://amdis.iaea.org/db/collisiondb/submitting-data/
 
 .. contents::
 
