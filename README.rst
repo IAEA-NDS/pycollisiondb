@@ -16,7 +16,7 @@
 Introduction to PyCollisionDB
 *****************************
 
-PyCollisionDB is a Python package for interacting with `CollisionDB`_ or `ALADDIN2`_, databases
+PyCollisionDB is a Python package for interacting with the `CollisionDB`_ database
 of plasma collisional cross sections and rate coefficients.
 
 Datasets in these collisional databases can be retrieved in a standardized way and compared, aggregated, and assessed using a set of predefined Python methods.
@@ -92,7 +92,8 @@ Valid Query Keywords
      ˈdata_typeˈ,
      ˈreactantsˈ,
      ˈproductsˈ,
-     ˈdoiˈ)
+     ˈdoiˈ,
+     'count_only')
     
     >>> # Example
     >>> pycoll = PyCollision.get_datasets(query={'rxns': ['H']})
@@ -298,20 +299,3 @@ The ``PyCollision`` method ``plot_all_datasets`` can be used to create plots usi
    :alt: figure
    :align: right                
    
-Connection to the ALADDIN2 API
-------------------------------
-
-.. code-block:: pycon
-
-
-    >>> #By default, PyCollisionDB interacts with the API to the CollisionDB server
-    >>> pycoll.API_URL
-    'https://db-amdis.org/collisiondb/api/'
-
-    >>> #API_URL can be directed to ALADDIN2 server by passing argument DB_URL 
-    >>> DB_URL = 'https://db-amdis.org/aladdin2'
-    >>> pycoll = PyCollision.get_datasets(query=query,DB_URL=DB_URL)
-    >>> pycoll.API_URL
-    'https://db-amdis.org/aladdin2/api/'
-    
-
