@@ -1,6 +1,6 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.2
 Name: pycollisiondb
-Version: 0.1.3
+Version: 0.1.5
 Summary: A package for interacting with CollisionDB
 Home-page: https://github.com/xnx/pycollisiondb
 Author: Christian Hill
@@ -20,8 +20,30 @@ Classifier: Programming Language :: Python :: 3 :: Only
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.8
 Description-Content-Type: text/x-rst
-Provides-Extra: dev
 License-File: LICENSE
+Requires-Dist: pyvalem>=2.5.10
+Requires-Dist: requests>=2.27.1
+Requires-Dist: numpy>=1.23.1
+Requires-Dist: matplotlib>=3.5.2
+Requires-Dist: pyqn>=1.3.1
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: tox; extra == "dev"
+Requires-Dist: ipython; extra == "dev"
+Requires-Dist: jupyter; extra == "dev"
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: project-url
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
 
 |PyPI version| |PyPI pyversions| |Code style|
 
@@ -32,9 +54,8 @@ License-File: LICENSE
 .. |Code style| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
 .. _PYPI: https://pypi.org/project/pycollisiondb/
-.. _COLLISIONDB: https://db-amdis.org/collisiondb/
-.. _ALADDIN2: https://db-amdis.org/aladdin2/
-.. _Documentation: https://db-amdis.org/collisiondb/submitting-data/
+.. _COLLISIONDB: https://amdis.iaea.org/db/collisiondb/
+.. _Documentation: https://amdis.iaea.org/db/collisiondb/submitting-data/
 
 .. contents::
 
